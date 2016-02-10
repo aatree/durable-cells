@@ -1,6 +1,8 @@
 # durable-cells
 Local Storage for Hoplon
 
+[![Clojars Project](https://img.shields.io/clojars/v/aatree/durable-cells.svg)](https://clojars.org/aatree/durable-cells)
+
 1. [Introduction](#introduction)
 1. [API](#api)
 1. [Change Log](#change-log)
