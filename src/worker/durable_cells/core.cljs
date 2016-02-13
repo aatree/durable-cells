@@ -1,34 +1,38 @@
 (ns durable-cells.core
+  (:require-macros
+    [aaworker.worker-macros :refer [deflpc! deflapc!]])
   (:require
     [aaworker.api :as api]))
 
 (def db (atom nil))
 
-(defn load-cell [success failure cell-name]
-  (let [request (-> @db
-                    (.transaction "cells")
-                    (.objectStore "cells")
-                    (.get cell-name))]
-    (set! (.-onerror request) failure)
-    (set! (.-onsuccess request)
-          (fn [_]
-            (let [result (.-result request)]
-              (if result
-                (success (.-first result))
-                (success nil)))))))
+(deflapc! load-cell [cell-name]
+          (let [request (-> @db
+                            (.transaction "cells")
+                            (.objectStore "cells")
+                            (.get cell-name))]
+            (set! (.-onerror request) failure)
+            (set! (.-onsuccess request)
+                  (fn [_]
+                    (let [result (.-result request)]
+                      (if result
+                        (success result)
+                        (success nil)))))))
 
-(defn save-cell [success failure cell-name value]
-  (let [request (-> @db
-                    (.transaction "cells" "readwrite")
-                    (.objectStore "cells")
-                    (.put value cell-name))]
-    (set! (.-onerror request) failure)
-    (set! (.-onsuccess request)
-          (fn [_]
-            (success (.-result request))))))
+(deflapc! save-cell [cell-name value]
+          (let [request (-> @db
+                            (.transaction "cells" "readwrite")
+                            (.objectStore "cells")
+                            (.put value cell-name))]
+            (set! (.-onerror request) failure)
+            (set! (.-onsuccess request)
+                  (fn [_]
+                    (success (.-result request))))))
 
-(defn start [databaseName]
-  (let [indexedDB (.-indexedDB js/self)
+(defn start []
+  (set! cljs.core/*print-fn* #(.log js/console %))
+  (let [databaseName "durable-cells"
+        indexedDB (.-indexedDB js/self)
         request (.open indexedDB databaseName)]
     (set! (.-onupgradeneeded request)
           (fn [event]

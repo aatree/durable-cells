@@ -5,7 +5,7 @@
                   [adzerk/boot-test                          "1.1.0" :scope "test"]
                   [adzerk/boot-cljs                          "1.7.228-1" :scope "test"]
                   [crisptrutski/boot-cljs-test               "0.2.1" :scope "test"]
-                  [aatree/aaworker                           "0.1.1"]]
+                  [aatree/aaworker                           "0.1.2"]]
   :resource-paths #{"src/worker"}
 )
 
@@ -13,7 +13,7 @@
   '[adzerk.boot-cljs            :refer [cljs]]
   '[adzerk.bootlaces            :refer :all])
 
-(def +version+ "0.0.1")
+(def +version+ "0.1.0")
 
 (bootlaces! +version+ :dont-modify-paths? true)
 
