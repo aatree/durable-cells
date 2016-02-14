@@ -28,7 +28,7 @@ demo: [Duracell](https://github.com/aatree/aademos/tree/master/duracell)
 
 ## API
 
-**```(durable-cells.core/start "my-cells")```**
+**```(durable-cells.core/open-durable-cells! "my-cells")```**
 
 Opens the database ```"my-cells"```. On successful completion,
 ```aaworker.api/process-requests``` is called.
@@ -48,5 +48,8 @@ And on successful completion of the put, the cell-name is returned
 via the ```success``` function.
 
 ## Change Log
+
+**0.1.0** - Rework the API. Eliminate the need for application client-side code.
+Provide a client-side macro for defining dcells.
 
 **0.0.1** - Initial release.

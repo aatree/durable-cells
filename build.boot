@@ -4,9 +4,9 @@
                   [adzerk/bootlaces                          "0.1.13" :scope "test"]
                   [adzerk/boot-test                          "1.1.0" :scope "test"]
                   [adzerk/boot-cljs                          "1.7.228-1" :scope "test"]
-                  [crisptrutski/boot-cljs-test               "0.2.1" :scope "test"]
+                  [hoplon/hoplon                             "6.0.0-alpha13"]
                   [aatree/aaworker                           "0.1.2"]]
-  :resource-paths #{"src/worker"}
+  :resource-paths #{"src/client" "src/worker"}
 )
 
 (require

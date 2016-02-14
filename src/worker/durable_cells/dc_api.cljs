@@ -1,6 +1,6 @@
-(ns durable-cells.core
+(ns durable-cells.dc-api
   (:require-macros
-    [aaworker.worker-macros :refer [deflpc! deflapc!]])
+    [aaworker.worker-macros :refer [deflapc!]])
   (:require
     [aaworker.api :as api]))
 
