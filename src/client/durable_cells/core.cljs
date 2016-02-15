@@ -8,8 +8,12 @@
 
 (defc error nil)
 (defc loading nil)
+(defc load-counter 0)
+(defc save-counter 0)
+(defc ready false)
 
 (defn process-cell [entry]
+  (swap! load-counter dec)
   (let [cell-str (entry 0)
         c (entry 1)
         cell-key (keyword cell-str)
@@ -26,6 +30,7 @@
           db-cell
           error
           loading
+          load-counter
           load-key)
         save
         (mklocal!
@@ -34,6 +39,7 @@
           db-save
           error
           loading
+          save-counter
           save-key)]
     (add-watch db-cell db-cell-key
                (fn [_ _ _ n]
@@ -50,11 +56,14 @@
       (process-cell (first entries))
       (recur (rest entries)))))
 
-(defn open-durable-cells! [cell-dic ready]
+(defn open-durable-cells! [cell-dic]
   (new-worker! worker-file)
-  (register-notice-processor!
-    worker-file
-    :ready
+  (register-notice-processor! worker-file :ready
     (fn []
       (process-cells (seq cell-dic))
-      (reset! ready true))))
+      (if (= 0 @load-counter)
+        (reset! ready true)
+        (add-watch load-counter :load-counter
+                   (fn [_ _ _ v]
+                     (if (= 0 v)
+                       (reset! ready true))))))))
