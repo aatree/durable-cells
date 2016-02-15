@@ -28,28 +28,26 @@ demo: [Duracell](https://github.com/aatree/aademos/tree/master/duracell)
 
 ## API
 
-**```(durable-cells.core/open-durable-cells! "my-cells")```**
+**```(open-durable-cells! {"txt" txt})```**
 
-Opens the database ```"my-cells"```. On successful completion,
-```aaworker.api/process-requests``` is called.
+Opens the database ```"durable-cells"```, loads the cells in the dictionary parameter
+and then watches them--saving any changes to the database.
 
-**```(durable-cells/load-cell success failure cell-name)```**
+The keys in the dictionary are the names of the cells in the database;
+the values in the dictionary are the cells.
 
-Returns the previously saved value of the cell, or ```nil```.
-The ```success``` parameter is a function which is called with the 
-result of a successful get.
-And the ```failure``` cell is a function which is called with the
-error of a failed get.
+**```(defc durable-cells/ready false)```**
 
-**```(durable-cells/save-cell success failure cell-name value)```**
+After all the cells included in the open-durable-cells dictionary parameter
+have been loaded, ```ready``` is reset! to true.
 
-Similar to ```load-cell```, except that the value is put in the cell.
-And on successful completion of the put, the cell-name is returned
-via the ```success``` function.
+**```(defc durable-cells/error nil)```**
+
+The error cell is reset! when an error occurs.
 
 ## Change Log
 
-**0.1.0** - Rework the API. Eliminate the need for application client-side code.
-Provide a client-side macro for defining dcells.
+**0.1.0** - Rework the API. Eliminate the need for application worker-side code.
+Signal ready only after loading completes.
 
 **0.0.1** - Initial release.
