@@ -15,9 +15,7 @@
             (set! (.-onsuccess request)
                   (fn [_]
                     (let [result (.-result request)]
-                      (if result
-                        (success result)
-                        (success nil)))))))
+                      (success result))))))
 
 (deflapc! save-cell [cell-name value]
           (let [request (-> @db

@@ -32,9 +32,10 @@
                durable-cells.core/loading
                ~save-key)]
          (add-watch ~db-cell-sym ~db-cell-key
-                    (fn [~'_ ~'_ ~'_ ~'n] (reset! ~cell-sym ~'n)))
+                    (fn [~'_ ~'_ ~'_ ~'n]
+                      (reset! ~cell-sym ~'n)))
          (add-watch ~cell-sym ~cell-key
                     (fn [~'_ ~'_ ~'_ ~'n]
                       (when (not= ~'n @~db-cell-sym)
                         (~save-sym ~cell-str ~'n))))
-         ))))
+         (~load-sym ~cell-str)))))
