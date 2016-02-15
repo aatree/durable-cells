@@ -1,4 +1,5 @@
-(ns durable-cells.client-macros)
+(ns durable-cells.client-macros
+  (:require [javelin.core :refer [defc]]))
 
 (defmacro defdcell! [cell-sym initial-value]
   (let [cell-str (str `~cell-sym)
@@ -12,19 +13,19 @@
         save-key (keyword (str "save-" cell-str))]
     `(do
        (defc ~cell-sym ~initial-value)
-       (let [~db-cell-sym (cell nil)
+       (let [~db-cell-sym (javelin.core/cell nil)
              ~load-sym
              (aaworker.lpc/mklocal!
-               ~'load-cell
+               "load-cell"
                durable-cells.core/worker-file
                ~db-cell-sym
                durable-cells.core/error
                durable-cells.core/loading
                ~load-key)
-             ~db-save-sym (cell nil)
+             ~db-save-sym (javelin.core/cell nil)
              ~save-sym
              (aaworker.lpc/mklocal!
-               ~'save-cell
+               "save-cell"
                durable-cells.core/worker-file
                ~db-save-sym
                durable-cells.core/error
