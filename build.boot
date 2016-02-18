@@ -13,7 +13,7 @@
   '[adzerk.boot-cljs            :refer [cljs]]
   '[adzerk.bootlaces            :refer :all])
 
-(def +version+ "0.1.0")
+(def +version+ "0.1.1")
 
 (bootlaces! +version+ :dont-modify-paths? true)
 
@@ -29,7 +29,9 @@
   "Build project for development."
   []
   (comp
-   (build-jar)))
+    (cljs :optimizations :simple)
+    (build-jar)
+    (target)))
 
 (deftask deploy-release
  "Build for release."
