@@ -47,6 +47,8 @@ The error cell is reset! when an error occurs.
 
 ## Change Log
 
+**0.1.2** - Updated dependencies.
+
 **0.1.1** - The worker .js file is compiled in the durable-cells library,
 not in the application. This has the advantage of allowing the application to
 be compiled with optimizations none, as web worker .js files do not currently

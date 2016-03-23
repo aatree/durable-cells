@@ -29,7 +29,7 @@
 
 (defn start []
   (set! cljs.core/*print-fn* #(.log js/console %))
-  (let [databaseName "durable-cells"
+  (let [databaseName "durable-cells-1"
         indexedDB (.-indexedDB js/self)
         request (.open indexedDB databaseName)]
     (set! (.-onupgradeneeded request)
