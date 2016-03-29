@@ -47,6 +47,8 @@ The error cell is reset! when an error occurs.
 
 ## Change Log
 
+**0.1.4** - Updated dependencies.
+
 **0.1.3** - Updated dependencies.
 
 **0.1.2** - Updated dependencies.
